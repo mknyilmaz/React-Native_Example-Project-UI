@@ -1,0 +1,221 @@
+import React, {Component} from 'react';
+import {Dimensions} from 'react-native';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator} from 'react-navigation-drawer';
+
+import Icon from 'react-native-vector-icons/Ionicons';
+import Icona from 'react-native-vector-icons/Feather';
+
+import Login from '../components/Login';
+import Home from '../screens/Home';
+import CoffeePage from '../screens/CoffeePage';
+import Setting from '../components/Setting';
+import Sidebar from '../components/Sidebar';
+import Personelpage from '../screens/Personelpage';
+import Online from '../components/Online';
+import Profil from '../screens/Profil';
+import Kredi from '../screens/Kredi';
+import Nasilkullanilir from '../screens/Nasilkullanilir';
+import Ayarlar from '../screens/Ayarlar';
+import Iletisim from '../screens/Iletisim';
+
+// HEADER
+const NavigationStack = createStackNavigator(
+  {
+    LoginScreen: {
+      screen: Login,
+      navigationOptions: () => ({
+        headerShown: false,
+      }),
+    },
+    HomeScreen: {
+      screen: Home,
+      navigationOptions: () => ({
+        title: 'Falapp',
+      }),
+    },
+    SettingScreen: {
+      screen: Setting,
+    },
+    CoffeePageScreen: {
+      screen: CoffeePage,
+      navigationOptions: () => ({
+        title: 'KahveFalı',
+      }),
+    },
+    PersonelpageScreen: {
+      screen: Personelpage,
+      navigationOptions: () => ({
+        title: 'KahveFali',
+      }),
+    },
+    OnlineScreen: {
+      screen: Online,
+      navigationOptions: () => ({
+        title: 'KahveFali',
+      }),
+    },
+    ProfilScreen: {
+      screen: Profil,
+      navigationOptions: () => ({
+        title: 'KahveFali',
+      }),
+    },
+  },
+  {
+    initialRouteName: 'ProfilScreen',
+
+    defaultNavigationOptions: ({navigation}) => ({
+      headerStyle: {
+        backgroundColor: '#f8b400',
+      },
+      headerTintColor: '#373737',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        fontFamily: 'Asap-Medium',
+      },
+      headerRight: (
+        <Icon
+          style={{paddingRight: 20}}
+          name={'ios-menu'}
+          size={28}
+          color={'#373737'}
+          onPress={() => navigation.openDrawer()}
+        />
+      ),
+    }),
+    headerLayoutPreset: 'center',
+  },
+);
+
+//  DRAWER NAVIGATION
+
+const NavigationDrawer = createDrawerNavigator(
+  {
+    Profil: {
+      screen: NavigationStack,
+      navigationOptions: {
+        drawerIcon: ({tintColor}) => (
+          <Icona
+            name="user"
+            size={28}
+            color={tintColor}
+            style={{marginRight: -5}}
+          />
+        ),
+        marginleft: 15,
+      },
+    },
+    Kredi: {
+      screen: Kredi,
+      navigationOptions: {
+        drawerIcon: ({tintColor}) => (
+          <Icona
+            name="credit-card"
+            size={28}
+            color={tintColor}
+            style={{marginRight: -5}}
+          />
+        ),
+        marginleft: 15,
+      },
+    },
+    NasılKullanılır: {
+      screen: Nasilkullanilir,
+      navigationOptions: {
+        drawerIcon: ({tintColor}) => (
+          <Icona
+            name="navigation"
+            size={28}
+            color={tintColor}
+            style={{marginRight: -5}}
+          />
+        ),
+        marginleft: 15,
+      },
+    },
+    Ayarlar: {
+      screen: Ayarlar,
+      navigationOptions: {
+        drawerIcon: ({tintColor}) => (
+          <Icona
+            name="settings"
+            size={28}
+            color={tintColor}
+            style={{marginRight: -5}}
+          />
+        ),
+        marginleft: 15,
+      },
+    },
+    İletişim: {
+      screen: Iletisim,
+      navigationOptions: {
+        drawerIcon: ({tintColor}) => (
+          <Icona
+            name="info"
+            size={28}
+            color={tintColor}
+            style={{marginRight: -5}}
+          />
+        ),
+        marginleft: 15,
+      },
+    },
+    Çıkış: {
+      screen: NavigationStack,
+      navigationOptions: {
+        drawerIcon: ({tintColor}) => (
+          <Icona
+            name="log-out"
+            size={28}
+            color={tintColor}
+            style={{marginRight: -5}}
+          />
+        ),
+        marginleft: 15,
+      },
+    },
+  },
+  {
+    contentComponent: props => <Sidebar {...props} />,
+
+    drawerWidth: Dimensions.get('window').width * 0.7,
+    hideStatusBar: true,
+    drawerBackgroundColor: '#f7f7f7',
+    overlayColor: 'rgba(248, 191, 69, 0.5)',
+
+    contentOptions: {
+      inactiveTintColor: '#373737',
+      activeTintColor: '#ffff',
+      activeBackgroundColor: '#ffae00',
+
+      itemsContainerStyle: {
+        marginTop: 23,
+      },
+
+      itemStyle: {
+        paddingTop: 15,
+        paddingLeft: 10,
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#5c5c5c',
+        borderBottomRightRadius: 3,
+        borderBottomLeftRadius: 3,
+      },
+
+      labelStyle: {
+        fontSize: 20,
+      },
+
+      iconContainerStyle: {
+        marginLeft: 35,
+        alignItems: 'center',
+      },
+    },
+    drawerPosition: 'right',
+  },
+);
+
+export default createAppContainer(NavigationDrawer);
